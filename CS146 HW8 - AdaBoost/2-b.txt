@@ -1,0 +1,23 @@
+import numpy as np
+from numpy import linalg as eg
+import matplotlib.pyplot as plt
+
+fp =  np.genfromtxt('MNIST3.csv', delimiter=',') # fp, the shape is (400, 784)
+T_fp = np.transpose(fp)
+cv = np.cov(T_fp)
+E_value, E_vector = eg.eig(cv)
+
+temp_vector = []
+for i in range(0,4):
+    temp_vector.append(E_vector[:, i])
+    
+fig, ax = plt.subplots(2, 2)
+temp_vector[0] = np.transpose(np.array(temp_vector[0].reshape(28, 28), dtype=float))
+ax[0, 0].imshow(temp_vector[0], cmap='gray')
+temp_vector[1] = np.transpose(np.array(temp_vector[1].reshape(28, 28), dtype=float))
+ax[1, 0].imshow(temp_vector[1], cmap='gray')
+temp_vector[2] = np.transpose(np.array(temp_vector[2].reshape(28, 28), dtype=float))
+ax[0, 1].imshow(temp_vector[2], cmap='gray')
+temp_vector[3] = np.transpose(np.array(temp_vector[3].reshape(28, 28), dtype=float))
+ax[1, 1].imshow(temp_vector[3], cmap='gray')
+plt.show()

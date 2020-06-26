@@ -1,0 +1,82 @@
+import numpy as np
+from numpy import linalg as eg
+import matplotlib.pyplot as plt
+import statistics
+
+fp =  np.genfromtxt('MNIST3.csv', delimiter=',') # fp, the shape is (400, 784)
+T_fp = np.transpose(fp)
+cv = np.cov(T_fp)
+E_value, E_vector = eg.eig(cv)
+
+temp_vector = []
+for i in range(0,400):
+    temp_vector.append(E_vector[:, i])
+temp_vector = np.array(temp_vector)
+
+
+MEAN_Vec_X = []
+for i in range(784):
+    TEMP = 0
+    for j in range(400):
+        TEMP = TEMP + T_fp[i][j]
+    MEAN_Vec_X.append(float(TEMP/400))
+
+X1 = fp[0]
+MEAN_Vec_X = np.array(MEAN_Vec_X)
+M = 1
+QQ = np.array(np.zeros(784))
+for m in range(0,M):
+    XX = np.dot(X1, temp_vector[m])
+    YY = np.dot(MEAN_Vec_X, temp_vector[m])
+    ZZ = (XX-YY)
+    QQ = QQ + ZZ*temp_vector[m]
+QQ = MEAN_Vec_X + QQ
+print(QQ.shape)
+plotting = np.transpose(np.array(QQ.reshape(28, 28), dtype=float))
+plt.subplot(2,2,1)
+plt.imshow(plotting, cmap='gray')
+
+
+M = 10
+QQ = np.array(np.zeros(784))
+for m in range(0,M):
+    XX = np.dot(X1, temp_vector[m])
+    YY = np.dot(MEAN_Vec_X, temp_vector[m])
+    ZZ = (XX-YY)
+    QQ = QQ + ZZ*temp_vector[m]
+QQ = MEAN_Vec_X + QQ
+print(QQ.shape)
+plotting = np.transpose(np.array(QQ.reshape(28, 28), dtype=float))
+plt.subplot(2,2,2)
+plt.imshow(plotting, cmap='gray')
+
+
+M = 50
+QQ = np.array(np.zeros(784))
+for m in range(0,M):
+    XX = np.dot(X1, temp_vector[m])
+    YY = np.dot(MEAN_Vec_X, temp_vector[m])
+    ZZ = (XX-YY)
+    QQ = QQ + ZZ*temp_vector[m]
+QQ = MEAN_Vec_X + QQ
+print(QQ.shape)
+plotting = np.transpose(np.array(QQ.reshape(28, 28), dtype=float))
+plt.subplot(2,2,3)
+plt.imshow(plotting, cmap='gray')
+
+
+M = 250
+QQ = np.array(np.zeros(784))
+for m in range(0,M):
+    XX = np.dot(X1, temp_vector[m])
+    YY = np.dot(MEAN_Vec_X, temp_vector[m])
+    ZZ = (XX-YY)
+    QQ = QQ + ZZ*temp_vector[m]
+QQ = MEAN_Vec_X + QQ
+print(QQ.shape)
+plotting = np.transpose(np.array(QQ.reshape(28, 28), dtype=float))
+plt.subplot(2,2,4)
+plt.imshow(plotting, cmap='gray')
+plt.show()
+
+

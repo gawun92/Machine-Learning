@@ -1,0 +1,13 @@
+import numpy as np
+from numpy import linalg as eg
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+fp =  np.genfromtxt('MNIST3.csv', delimiter=',') # fp, the shape is (400, 784)
+T_fp = np.transpose(fp)
+cv = np.cov(T_fp)
+E_value, E_vector = eg.eig(cv)
+temp = sorted(E_value[:], reverse=True)
+temp = temp[:100]  # save the 100 largest eigenvalues from data
+plt.plot(temp)
+plt.show()
